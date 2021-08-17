@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import shortid from "shortid";
+import { useDispatch, useSelector } from "react-redux";
 
-const ContactForm = ({ submit }) => {
+const ContactForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.contacts);
 
   function formSubmit(e) {
     e.preventDefault();
 
-    submit({ name, number });
+    const newContact = [{ id: shortid.generate(), name: name, number: number }];
+
+    items.some((item) => item.name === name)
+      ? alert(`${name} is already in contacts`)
+      : dispatch({
+          type: "SET_ITEMS",
+          payload: [...items, ...newContact],
+        });
 
     setName("");
     setNumber("");
@@ -42,10 +53,6 @@ const ContactForm = ({ submit }) => {
       <button type="submit">Add to contacts</button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func,
 };
 
 export default ContactForm;
