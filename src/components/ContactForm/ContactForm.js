@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import shortid from "shortid";
+import { postContact } from "../../services/contactsAPI";
 import { useDispatch, useSelector } from "react-redux";
 
 const ContactForm = () => {
@@ -12,14 +13,16 @@ const ContactForm = () => {
   function formSubmit(e) {
     e.preventDefault();
 
-    const newContact = [{ id: shortid.generate(), name: name, number: number }];
+    const newContact = { id: shortid.generate(), name: name, number: number };
 
     items.some((item) => item.name === name)
       ? alert(`${name} is already in contacts`)
       : dispatch({
           type: "SET_ITEMS",
-          payload: [...items, ...newContact],
+          payload: [...items, newContact],
         });
+
+    postContact(newContact);
 
     setName("");
     setNumber("");

@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getFilter } from "../../app/selectors";
 
 const Filter = () => {
-  const { filter } = useSelector((state) => state.contacts);
+  const { filter } = useSelector(getFilter);
   const dispatch = useDispatch();
 
   return (
