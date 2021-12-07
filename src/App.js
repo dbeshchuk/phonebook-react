@@ -4,15 +4,17 @@ import ContactsList from "./components/ContactsList/ContactsList";
 import Filter from "./components/Filter/Filter";
 import "./App.css";
 
+import { Container } from "@mui/material";
+
 const App = () => (
-  <div className="container">
+  <Container className="container">
     <h1>Phonebook</h1>
     <ContactForm />
 
     <h2>Contacts</h2>
     <Filter />
     <ContactsList />
-  </div>
+  </Container>
 );
 
 export default App;

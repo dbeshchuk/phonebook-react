@@ -1,38 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ContactItem from "../ContactItem/ContactItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts, deleteContact } from "../../services/contactsAPI";
+// import { getContacts, deleteContact } from "../../services/contactsAPI";
 import { getFilteredContacts } from "../../app/selectors";
+
+import { List } from "@mui/material";
+
+const styles = {
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: 600,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+};
 
 const ContactsList = () => {
   const dispatch = useDispatch();
   const filteredContacts = useSelector(getFilteredContacts);
 
-  useEffect(() => {
-    getContacts()
-      .then((value) => dispatch({ type: "SET_ITEMS", payload: value }))
-      .catch((error) => console.log(error));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const onDeleteContact = (id) => {
     dispatch({ type: "DELETE_ITEM", payload: id });
-    deleteContact(id);
+    // deleteContact(id);
   };
 
   return (
-    <ul>
+    <List style={styles.container}>
       {filteredContacts.map(({ id, name, number }) => (
         <ContactItem
           key={id}
           id={id}
           name={name}
           number={number}
-          onDeleteClick={(e) => onDeleteContact(e.target.id)}
+          onDeleteClick={(e) => onDeleteContact(e.currentTarget.id)}
         />
       ))}
-    </ul>
+    </List>
   );
 };
 

@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilter } from "../../app/selectors";
 
+import { Input } from "@mui/material";
+
 const Filter = () => {
   const { filter } = useSelector(getFilter);
   const dispatch = useDispatch();
@@ -9,7 +11,8 @@ const Filter = () => {
   return (
     <label>
       Find contacts by name:
-      <input
+      <Input
+        label="Search"
         type="text"
         name="filter"
         value={filter}
@@ -17,6 +20,7 @@ const Filter = () => {
           dispatch({ type: "SET_FILTER", payload: e.target.value });
         }}
         className="filter-input"
+        variant="Outlined"
       />
     </label>
   );
